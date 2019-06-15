@@ -1,3 +1,43 @@
-<p>
-  incubator works!
-</p>
+<div class="container">
+    <div *ngIf="!submitted">
+        <h3>Post Your Ideas </h3>
+        <p> You can post your ides and innovations in this section </p>
+      <form #heroForm="ngForm" (ngSubmit)="onSubmit(heroForm.value)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" name="name" ngModel #name="ngModel" required>
+          <div class="alert alert-danger" [hidden]="name.valid || name.pristine">Name is required</div>
+        </div>
+        <div class="form-group">
+          <label for="alterEgo">Ideas</label>
+          <input type="text" class="form-control" name="alterEgo" ngModel #alterEgo="ngModel" required>
+          <div class="alert alert-danger" [hidden]="alterEgo.valid || alterEgo.pristine">Alter Ego is required</div>
+        </div>
+        <div class="form-group">
+          <label for="power">Category</label>
+          <select class="form-control" name="power" ngModel #power="ngModel" required>
+            <option *ngFor="let p of powers" [value]="p">{{ p }}</option>
+          </select>
+          <div class="alert alert-danger" [hidden]="power.valid || power.pristine">Power is required</div>
+        </div>
+        <button type="submit" class="btn btn-default" [disabled]="!heroForm.valid">Submit</button>
+      </form>
+    </div>
+    <div *ngIf="submitted">
+      <h2>You submitted the following:</h2>
+      <div class="row">
+        <div class="col-md-2">Name</div>
+        <div class="col-md-10 pull-left">{{ form.name }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">Idea</div>
+        <div class="col-md-10 pull-left">{{ form.alterEgo }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">Category</div>
+        <div class="col-md-10 pull-left">{{ form.power }}</div>
+      </div>
+      <br />
+      <button class="btn btn-default" (click)="submitted=false">Edit</button>
+    </div>
+  </div>
